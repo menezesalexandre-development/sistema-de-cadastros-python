@@ -2,13 +2,35 @@ import PySimpleGUI as sg
 from packages import *
 from time import sleep
 
-def open_window():
-    layout = [[sg.Text("New Window", key="new")]]
-    window = sg.Window("Second Window", layout, modal=True)
+
+def ver_cadastros():
+    layout_pre = dict()
+    from cadastrar import arquivo_cadastros
+
+    try:
+        a = open(arquivo_cadastros, 'rt')
+    except:
+        print('Erro ao ler o arquivo!')
+
+    layout = [
+        [sg.Text("LISTA DE CADASTROS: ", key="new")],
+    ]
+
+    c = 0
+    for linha in a:
+        dado = linha.split(';')
+        dado[1] = dado[1].replace('\n', '')
+        new_register = [sg.Text(f'Nome: {dado[0]} | E-mail: {dado[1]}')]
+        layout.append(new_register)
+        print(f'Nome: {dado[0]:5} | Email: {dado[1]}')
+        c += 1
+
+    layout.append([sg.Button('Sair')])
+    window = sg.Window("Visualizar cadastros", layout, modal=True)
     choice = None
     while True:
         event, values = window.read()
-        if event == "Exit" or event == sg.WIN_CLOSED:
+        if event == sg.WIN_CLOSED or event == 'Sair':
             break
 
     window.close()
@@ -47,6 +69,9 @@ def main():
             window['name'].update('')
             window['email'].update('')
             window['cadastro_status'].update('')
+
+        if event == 'Ver cadastros':
+            ver_cadastros()
 
 
     window.close()

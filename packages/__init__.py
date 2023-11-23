@@ -1,6 +1,8 @@
 import PySimpleGUI as sg
 from time import sleep
 
+global a
+
 
 def arquivo_existe(arquivo):
     try:
@@ -26,24 +28,11 @@ layout_ver_cadastros = list()
 
 
 def ler_arquivo(arquivo):
+    global a
     try:
         a = open(arquivo, 'rt')
     except:
         print('Erro ao ler o arquivo!')
-    else:
-        global layout_ver_cadastros
-
-        layout_ver_cadastros = [
-            [sg.Text('PESSOAS CADASTRADAS:')],
-        ]
-        for linha in a:
-            dado = linha.split(';')
-            dado[1] = dado[1].replace('\n', '')
-            new_register = {'name': dado[1], 'email': dado[1]}
-            layout_ver_cadastros.append(new_register.copy())
-            print(f'Nome: {dado[0]:5} | Email: {dado[1]}')
-    finally:
-        a.close()
 
 
 def cadastrar(arquivo, nome='Desconhecido', email='Desconhecido'):
