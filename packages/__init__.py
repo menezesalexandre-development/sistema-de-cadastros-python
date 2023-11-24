@@ -35,14 +35,16 @@ def ler_arquivo(arquivo):
         print('Erro ao ler o arquivo!')
 
 
-def cadastrar(arquivo, nome='Desconhecido', email='Desconhecido'):
+def cadastrar(arquivo, nome='Desconhecido', email='Desconhecido', data_nasc='0000-00-00'):
+    from interface_functions import layout
+
     try:
         a = open(arquivo, 'at')
     except:
         print(f'Houve um ERRO na hora de cadastrar')
     else:
         try:
-            a.write(f'{nome}; {email}\n')
+            a.write(f'{nome}; {email}; {data_nasc}\n')
         except:
             print(f'Houve um erro no cadastro')
         else:
